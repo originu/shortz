@@ -6,7 +6,7 @@ phases:
       java: corretto17
     commands:
       - echo install docker
-      - yum update
+      - yum update -y
       - yum install -y docker.io
   pre_build:
     commands:
