@@ -10,7 +10,7 @@ phases:
       - pwd
       - ls -al
       - aws --version
-      - sudo systemctl start docker
+      - systemctl start docker
       - docker info
   build:
     commands:
