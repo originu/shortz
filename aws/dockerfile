@@ -1,0 +1,7 @@
+FROM public.ecr.aws/ews-network/amazoncorretto:17
+ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+EXPOSE 8080
+RUN yum install -y python3 -y
+COPY target/*.jar /app.jar
+COPY entrypoint.sh /
+ENTRYPOINT ["sh", "/entrypoint.sh"]

@@ -7,23 +7,34 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
-      - pwd
-      - ls -al
+      - REGION=ap-northeast-2
+      - REPOSITORY_URI=860315841419.dkr.ecr.ap-northeast-2.amazonaws.com
+      - IMAGE_NAME=shortz/dev/shortz-sample
+      - IMAGE_TAG=latest
+      - DEPLOY_TAG=staging
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - BUILD_TAG=${COMMIT_HASH:=staging}
+      - CONTAINER_NAME=shortz-staging
+      - DOCKERFILE_PATH=aws/dockerfile
+      - echo Logging in to Amazon ECR...
       - aws --version
-      - cat /etc/os-release
-      - docker ps --all
+      - aws ecr get-login-password --region $REGION | docker login -u AWS --password-stdin $REPOSITORY_URI
   build:
     commands:
-      - echo Build started on `date`
-      - chmod 766 gradlew
+      - echo Building the Docker image... `date`
+      - chmod +x gradlew
       - ./gradlew build
+      - docker build -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+      - docker tag $IMAGE_NAME:$IMAGE_TAG $REPOSITORY_URI/$IMAGE_NAME:$DEPLOY_TAG
       - pwd
       - ls -al
   post_build:
     commands:
       - echo Build completed on `date`
-      - pwd
-      - ls -al
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI/$IMAGE_NAME:$DEPLOY_TAG
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI/$IMAGE_NAME:$DEPLOY_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
 artifacts:
   files:
-    - target/shortz.jar
+    - imagedefinitions.json
