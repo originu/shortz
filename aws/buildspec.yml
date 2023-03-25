@@ -9,6 +9,7 @@ phases:
       - echo Nothing to do in the pre_build phase...
       - pwd
       - ls -al
+      - docker ps --all
   build:
     commands:
       - echo Build started on `date`
