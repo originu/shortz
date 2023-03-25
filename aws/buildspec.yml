@@ -10,6 +10,7 @@ phases:
       - pwd
       - ls -al
       - aws --version
+      - docker --version
   build:
     commands:
       - echo Build started on `date`
