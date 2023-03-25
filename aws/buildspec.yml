@@ -7,13 +7,20 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
+      - pwd
+      - ls -al
   build:
     commands:
       - echo Build started on `date`
+      - chmod 766 gradlew
       - ./gradlew build
+      - pwd
+      - ls -al
   post_build:
     commands:
       - echo Build completed on `date`
+      - pwd
+      - ls -al
 artifacts:
   files:
     - target/shortz.jar
