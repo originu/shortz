@@ -4,6 +4,10 @@ phases:
   install:
     runtime-versions:
       java: corretto17
+    commands:
+      - echo install docker
+      - yum update
+      - yum install -y docker.io
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
