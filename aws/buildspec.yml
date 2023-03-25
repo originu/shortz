@@ -11,9 +11,7 @@ phases:
       - ls -al
       - aws --version
       - cat /etc/os-release
-      - docker run --privileged -d --name mycentos7 centos:7 /sbin/init
-      - sudo systemctl start docker
-      - docker info
+      - docker ps --all
   build:
     commands:
       - echo Build started on `date`
