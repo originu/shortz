@@ -5,4 +5,5 @@ export ECS_INSTANCE_IP_ADDRESS=$(echo ${ECS_INSTANCE_IP_TASK} | python3 -c "impo
 echo "${ECS_INSTANCE_IP_ADDRESS} ${ECS_INSTANCE_HOSTNAME}" | tee -a /etc/hosts
 echo "ECS_INSTANCE_HOSTNAME: " ${ECS_INSTANCE_HOSTNAME}
 echo "ECS_INSTANCE_IP_ADDRESS: " ${ECS_INSTANCE_IP_ADDRESS}
+echo java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app.jar –-spring.profiles.active=dev
 exec java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app.jar –-spring.profiles.active=dev
