@@ -14,7 +14,8 @@ phases:
       - DEPLOY_TAG=staging
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - BUILD_TAG=${COMMIT_HASH:=staging}
-      - CONTAINER_NAME=shortz-staging
+#      - CONTAINER_NAME=shortz-staging
+      - CONTAINER_NAME=shortz-dev-shortz-sample
       - DOCKERFILE_PATH=aws/dockerfile
       - echo Logging in to Amazon ECR...
       - aws --version
