@@ -16,6 +16,8 @@ public class SampleController {
 
     @GetMapping("/api/sample")
     public ResponseEntity<ObjectNode> getSample() {
+
+
         ObjectNode jsonNodes = JsonNodeFactory.instance.objectNode();
         jsonNodes.put("myname", myname);
         return new ResponseEntity<>(jsonNodes, HttpStatus.OK);
